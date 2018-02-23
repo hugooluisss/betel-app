@@ -1,0 +1,63 @@
+@verde: #00a65a;
+@atenuacion: #006e3c;
+@contraste: #444242;
+@gris: #D8D8D8;
+@grisBoton: #585858;
+
+body{
+	background: @gris;
+	
+	input::-webkit-input-placeholder {
+		text-align: center;
+	}
+
+	input:-moz-placeholder { /* Firefox 18- */
+		text-align: center;  
+	}
+
+	input::-moz-placeholder {  /* Firefox 19+ */
+		text-align: center;  
+	}
+
+	input:-ms-input-placeholder {  
+		text-align: center; 
+	}
+	
+	.btn-success{
+		background: @verde;
+	}
+	
+	.btn-secondary{
+		background: @grisBoton;
+		color: white;
+		
+		&:hover{
+			background: @grisBoton + #BDBDBD;
+		}
+	}
+	
+	.navbar{
+		background: @verde;
+		
+		.navbar-brand{
+			.img-responsive{
+				height: 100%;
+			}
+		}
+	}
+}
+
+
+body.login{
+	.navbar{	
+		.navbar-brand{
+			position: absolute;
+			left: 50%;
+			margin-left: -50px !important;  /* 50% of your logo width */
+			display: block;
+		}
+	}
+}
+
+body.mensajes{
+}
