@@ -45,6 +45,9 @@ body{
 		background: @verde;
 		
 		.navbar-brand{
+			padding: 5px 5px;
+			margin-top: 5px;
+			
 			.img-responsive{
 				height: 100%;
 			}
@@ -66,10 +69,13 @@ body{
 body[modulo="login"]{
 	.navbar{	
 		.navbar-brand{
-			position: absolute;
-			left: 50%;
-			margin-left: -50px !important;  /* 50% of your logo width */
-			display: block;
+			width: 100%;
+			text-align: center;
+			
+			.img-responsive{
+				height: 40px;
+				display: inline;
+			}
 		}
 	}
 }

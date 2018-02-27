@@ -46,7 +46,7 @@ var app = {
 				console.log("Conexión desde phonegap OK");
 				crearBD(db);
 			}catch(err){
-				alertify.error("No se pudo crear la base de datos con sqlite... se intentará trabajar con web");
+				//alertify.error("No se pudo crear la base de datos con sqlite... se intentará trabajar con web");
 				db = window.openDatabase("betel.db", "1.0", "BD de Betel", 200000);
 				crearBD(db);
 				console.log("Se inicio la conexión a la base para web");
@@ -104,10 +104,10 @@ var app = {
 	}
 };
 
-//app.initialize();
+app.initialize();
 
 $(document).ready(function(){
-	app.onDeviceReady();
+	//app.onDeviceReady();
 });
 
 function addMensaje(mensaje){

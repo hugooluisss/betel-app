@@ -34,6 +34,7 @@ var app = {
 	// The scope of 'this' is the event. In order to call the 'receivedEvent'
 	// function, we must explicitly call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
+		//window.localStorage.removeItem("sesion");
 		var codigo = window.localStorage.getItem("sesion");
 		
 		if (codigo != null && codigo != undefined && codigo != '')
