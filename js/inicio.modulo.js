@@ -35,6 +35,10 @@ var app = {
 	// The scope of 'this' is the event. In order to call the 'receivedEvent'
 	// function, we must explicitly call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
+		document.addEventListener("backbutton", function(){
+			return false;
+		}, true);
+		
 		var codigo = window.localStorage.getItem("sesion");
 		if (codigo == null && codigo == undefined && codigo == ''){
 			location.href = "index.html";
@@ -104,10 +108,10 @@ var app = {
 	}
 };
 
-app.initialize();
+//app.initialize();
 
 $(document).ready(function(){
-	//app.onDeviceReady();
+	app.onDeviceReady();
 });
 
 function addMensaje(mensaje){
@@ -135,7 +139,7 @@ function addMensaje(mensaje){
 		if (mensaje.estado < 2){		
 			db.transaction(function(tx){
 				var hoy = new Date();
-				fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getMilliseconds();
+				fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
 				tx.executeSql("update mensaje set estado = 2, actualiza = 1 where referencia = ? ", [mensaje.referencia], function(tx, rs){
 				}, errorDB);
 			});
@@ -183,7 +187,7 @@ function getRemoteMensajes(){
 					});
 					
 					var hoy = new Date();
-					inicio = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getMilliseconds();
+					inicio = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
 					window.localStorage.setItem("fecha", inicio);
 				}
 			});
