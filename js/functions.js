@@ -1,4 +1,5 @@
 var server = "http://192.168.2.4/betel-web/";
+var server = "http://www.colegiobetel.edu.uy/web/mensajes/";
 
 function showPanel(panel, after){
 	$("[panel]").hide();

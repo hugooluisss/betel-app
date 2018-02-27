@@ -36,34 +36,71 @@ var app = {
 	// function, we must explicitly call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
 		var codigo = window.localStorage.getItem("sesion");
-		
-		if (codigo == null && codigo == undefined && codigo == '')
+		if (codigo == null && codigo == undefined && codigo == ''){
 			location.href = "index.html";
-		else
+			window.localStorage.removeItem("fecha");
+		}else{
+			try{
+				//db = openDatabase({name: "tracking.db"});
+				db = window.sqlitePlugin.openDatabase({name: 'betel.db', location: 1, androidDatabaseImplementation: 2});
+				console.log("Conexión desde phonegap OK");
+				crearBD(db);
+			}catch(err){
+				alertify.error("No se pudo crear la base de datos con sqlite... se intentará trabajar con web");
+				db = window.openDatabase("betel.db", "1.0", "BD de Betel", 200000);
+				crearBD(db);
+				console.log("Se inicio la conexión a la base para web");
+			}
 			showPanel("listaMensajes", function(){
-				getRemoteMensajes();
-				
 				getMensajes({
 					after: function(mensajes){
 						$(".listaMensajes").find("li").remove();
 						$.each(mensajes, function(i, mensaje){
-							var titulo = $("<b />", {
-								class: "mb-1",
-								text: mensaje.titulo
-							});
-							
-							var li = $("<li />", {
-								class: "list-group-item"
-							});
-							
-							li.append(titulo).append('<small>' + mensaje.fecha + '</small>');
-							li.attr("data", JSON.stringify(mensaje));
-							$(".listaMensajes").append(li);
-							console.log(li);
+							addMensaje(mensaje);
 						});
+						
+						getRemoteMensajes();
 					}
 				});
 			});
+		}
+		
+		$("#showMensajes").click(function(){
+			showPanel("listaMensajes");
+		});
+		
+		$("#actualizarMensajes").click(function(){
+			getMensajes({
+				before: function(){
+					getRemoteMensajes();
+				},
+				after: function(mensajes){
+					$(".listaMensajes").find("li").remove();
+					$.each(mensajes, function(i, mensaje){
+						addMensaje(mensaje);
+					});
+				}
+			});
+		});
+		
+		$("#salir").click(function(){
+			mensajes.confirm({
+				mensaje: "¿Seguro de querer salir?", 
+				funcion: function(buttonIndex){
+		    		if(buttonIndex == 1) {
+			    		db.transaction(function(tx){
+			    			tx.executeSql("delete from mensaje", [], function(tx, rs){
+			    				window.localStorage.removeItem("sesion");
+			    				window.localStorage.removeItem("fecha");
+			    				location.href = "index.html";
+			    			}, function(){
+			    				alertify.error("No se pudo cerrar la sesión");
+			    			});
+			    		});
+			    	}
+			    }
+	    	});
+		});
 	}
 };
 
@@ -73,43 +110,93 @@ $(document).ready(function(){
 	app.onDeviceReady();
 });
 
-function getRemoteMensajes(){
-	try{
-		//db = openDatabase({name: "tracking.db"});
-		db = window.sqlitePlugin.openDatabase({name: 'betel.db', location: 1, androidDatabaseImplementation: 2});
-		console.log("Conexión desde phonegap OK");
-		crearBD(db);
-	}catch(err){
-		alertify.error("No se pudo crear la base de datos con sqlite... se intentará trabajar con web");
-		db = window.openDatabase("betel.db", "1.0", "BD de Betel", 200000);
-		crearBD(db);
-		console.log("Se inicio la conexión a la base para web");
-	}
-	var objUser = new TUsuario;
-	var inicio = window.localStorage.getItem("fecha");
+function addMensaje(mensaje){
+	var titulo = $("<b />", {
+		class: "mb-1",
+		text: mensaje.titulo
+	});
 	
-	objUser.getMensajes({
-		"inicio": inicio,
-		after: function(resp){
+	var li = $("<li />", {
+		class: "list-group-item"
+	});
+	
+	li.append(titulo).append('<small>' + mensaje.fecha + '</small>');
+	li.attr("data", JSON.stringify(mensaje));
+	$(".listaMensajes").append(li);
+	
+	li.click(function(){
+		var mensaje = jQuery.parseJSON($(this).attr("data"));
+		$.each(mensaje, function(key, valor){
+			$("[panel=mensaje]").find("[campo=" + key + "]").html(valor);
+		});
+		
+		showPanel("mensaje");
+		
+		if (mensaje.estado < 2){		
 			db.transaction(function(tx){
-				$.each(resp, function(i, mensaje){
-					tx.executeSql('insert into mensaje(idMensaje, titulo, fecha, mensaje) values (?, ? , ?, ?)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
-						console.log(mensaje, "insertado");
-					}, errorDB);
-				});
+				var hoy = new Date();
+				fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getMilliseconds();
+				tx.executeSql("update mensaje set estado = 2, actualiza = 1 where referencia = ? ", [mensaje.referencia], function(tx, rs){
+				}, errorDB);
 			});
 		}
 	});
+	console.log(li);
+}
+
+function getRemoteMensajes(){
+	var objUser = new TUsuario;
+	//window.localStorage.removeItem("fecha");
+	var inicio = window.localStorage.getItem("fecha");
+	result = new Array();
 	
-	var hoy = new Date();
-	inicio = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getMilliseconds();
-	window.localStorage.setItem("fecha", inicio);
+	
+	$("#actualizarMensajes").addClass("fa-spin");
+	
+	db.transaction(function(tx) {
+		tx.executeSql('SELECT * FROM mensaje where actualiza = 1 order by referencia desc', [], function(tx, rs) {
+			for (i = 0 ; i < rs.rows.length ; i++){
+				result.push(rs.rows.item(i));
+			}
+			objUser.getMensajes({
+				"inicio": inicio,
+				"actualizacion": JSON.stringify(result),
+				after: function(resp){
+					$("#actualizarMensajes").removeClass("fa-spin");
+					db.transaction(function(tx){
+						$.each(resp, function(i, mensaje){
+							tx.executeSql("select * from mensaje where referencia = ? ", [mensaje.idMensaje], function(tx, rs){
+								if (rs.rows.length == 0)
+									tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, 1, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
+										addMensaje(mensaje);
+										console.log(mensaje, "insertado");
+									}, errorDB);
+								else
+									tx.executeSql('update mensaje set titulo = ?, fecha = ?, mensaje = ?, estado = ?, actualiza = 0 where referencia = ?', [mensaje.titulo, mensaje.fecha, mensaje.mensaje, mensaje.estado, mensaje.idMensaje], function(){
+										//addMensaje(mensaje);
+										console.log(mensaje, "Actualizado");
+									}, errorDB);
+							}, errorDB);
+						});
+						
+						tx.executeSql('update mensaje set actualiza = 0 where actualiza = 1', [], function(tx, rs){}, errorDB);
+					});
+					
+					var hoy = new Date();
+					inicio = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getMilliseconds();
+					window.localStorage.setItem("fecha", inicio);
+				}
+			});
+			
+			//if (datos.after !== undefined) datos.after(result);
+		}, errorDB);
+	});
 }
 
 function getMensajes(datos){
 	if (datos.before !== undefined) datos.before();
 	db.transaction(function(tx) {
-		tx.executeSql('SELECT * FROM mensaje', [], function(tx, rs) {
+		tx.executeSql('SELECT * FROM mensaje order by referencia desc', [], function(tx, rs) {
 			result = new Array();
 			for (i = 0 ; i < rs.rows.length ; i++){
 				result.push(rs.rows.item(i));
@@ -121,13 +208,13 @@ function getMensajes(datos){
 
 function crearBD(){
 	db.transaction(function(tx){
-		//tx.executeSql('drop table if exists tienda');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS mensaje (idMensaje integer primary key, titulo text, fecha text, mensaje text)', [], function(){
+		//tx.executeSql('drop table if exists mensaje');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS mensaje (referencia integer, titulo text, fecha text, mensaje text, estado integer, actualiza integer)', [], function(){
 			console.log("tabla mensaje creada");
 		}, errorDB);
 	});
 }
 
 function errorDB(tx, res){
-	console.log("Error: " + res.message);
+	console.log("Error: ", res);
 }

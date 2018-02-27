@@ -39,6 +39,7 @@ TUsuario = function(fn){
 		$.post(server + 'interface.php', {
 			"codigo": codigo,
 			"inicio": datos.inicio,
+			"actualizacion": datos.actualizacion,
 			"action": 'getMsgs',
 		}, function(resp){
 			if (datos.after !== undefined)
