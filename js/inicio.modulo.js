@@ -117,7 +117,7 @@ $(document).ready(function(){
 function addMensaje(mensaje){
 	var titulo = $("<b />", {
 		class: "mb-1",
-		text: mensaje.titulo
+		text: mensaje.titulo + "&nbsp;"
 	});
 	
 	var li = $("<li />", {

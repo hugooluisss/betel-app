@@ -67,6 +67,9 @@ var app = {
 					celular: $("#txtCelular").val(), 
 					before: function(){
 						$("#frmLogin [type=submit]").prop("disabled", true);
+						showPanel("codigo", function(){
+							$("#txtCodigo").val("").focus();
+						});
 					},
 					after: function(data){
 						$("#frmLogin [type=submit]").prop("disabled", false);
@@ -74,9 +77,9 @@ var app = {
 						if (data.band == false){
 							mensajes.alert({mensaje: "No se pudo enviar el SMS con el código, verifica que el número de tu telefono sea correcto", title: "Erro al enviar el código"});
 							$("#frmLogin [type=submit]").prop("disabled", false);
-						}else{
-							showPanel("codigo", function(){
-								$("#txtCodigo").val("").focus();
+							
+							showPanel("bienvenida", function(){
+								$("#txtCelular").focus();
 							});
 						}
 					}
