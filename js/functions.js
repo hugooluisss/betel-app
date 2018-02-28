@@ -1,6 +1,9 @@
 var server = "http://192.168.2.4/betel-web/";
 var server = "http://www.colegiobetel.edu.uy/web/mensajes/";
 
+ServerAPI = "AlzaSyB9dNgR4Ly7Ich63FIHIFbZd1_zOdcg9OI";
+SenderID = "600570554530";
+
 function showPanel(panel, after){
 	$("[panel]").hide();
 	

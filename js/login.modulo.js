@@ -38,6 +38,35 @@ var app = {
 			return false;
 		}, true);
 		
+		window.plugins.PushbotsPlugin.initialize(ServerAPI, {
+			"android":{
+				"sender_id": SenderID
+			}
+		});
+		
+		// Should be called once app receive the notification only while the application is open or in background
+		window.plugins.PushbotsPlugin.on("notification:received", function(data){
+			console.log("received:", data);
+			var datos = JSON.stringify(data);
+			window.plugins.PushbotsPlugin.resetBadge();
+			
+			//Silent notifications Only [iOS only]
+			//Send CompletionHandler signal with PushBots notification Id
+			window.plugins.PushbotsPlugin.done(data.pb_n_id);
+			if (data.aps.alert != '')
+				alertify.success(data.aps.alert);
+				
+			window.plugins.PushbotsPlugin.resetBadge();
+		});
+		
+		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
+			console.log("clicked:" + JSON.stringify(data));
+			if (data.message != undefined)
+				alertify.success(data.message);
+				
+			window.plugins.PushbotsPlugin.resetBadge();
+		});
+		
 		//window.localStorage.removeItem("sesion");
 		var codigo = window.localStorage.getItem("sesion");
 		
@@ -50,7 +79,6 @@ var app = {
 			
 		var celular = window.localStorage.getItem("celular");
 		$("#txtCelular").val(celular)
-		window.localStorage.setItem("celular", $("#txtCelular").val());
 		
 		$("#frmLogin").validate({
 			debug: true,
@@ -73,6 +101,8 @@ var app = {
 					},
 					after: function(data){
 						$("#frmLogin [type=submit]").prop("disabled", false);
+						window.localStorage.setItem("celular", $("#txtCelular").val());
+						
 						console.log(data);
 						if (data.band == false){
 							mensajes.alert({mensaje: "No se pudo enviar el SMS con el código, verifica que el número de tu telefono sea correcto", title: "Erro al enviar el código"});
@@ -131,5 +161,5 @@ var app = {
 app.initialize();
 
 $(document).ready(function(){
-	app.onDeviceReady();
+	//app.onDeviceReady();
 });

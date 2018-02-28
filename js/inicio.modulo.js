@@ -39,6 +39,12 @@ var app = {
 			return false;
 		}, true);
 		
+		window.plugins.PushbotsPlugin.initialize(ServerAPI, {
+			"android":{
+				"sender_id": SenderID
+			}
+		});
+		
 		var codigo = window.localStorage.getItem("sesion");
 		if (codigo == null && codigo == undefined && codigo == ''){
 			location.href = "index.html";
@@ -55,6 +61,54 @@ var app = {
 				crearBD(db);
 				console.log("Se inicio la conexión a la base para web");
 			}
+			
+			// Should be called once app receive the notification only while the application is open or in background
+			window.plugins.PushbotsPlugin.on("notification:received", function(data){
+				console.log("received:", data);
+				var datos = JSON.stringify(data);
+				window.plugins.PushbotsPlugin.resetBadge();
+				
+				//Silent notifications Only [iOS only]
+				//Send CompletionHandler signal with PushBots notification Id
+				window.plugins.PushbotsPlugin.done(data.pb_n_id);
+				if (data.aps.alert != '')
+					alertify.success(data.aps.alert);
+					
+				window.plugins.PushbotsPlugin.resetBadge();
+			});
+			
+			// Should be called once the notification is clicked
+			window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
+				console.log("clicked:" + JSON.stringify(data));
+				if (data.message != undefined)
+					alertify.success(data.message);
+					
+				window.plugins.PushbotsPlugin.resetBadge();
+			});	
+			
+			//window.plugins.PushbotsPlugin.debug(true);
+			// Should be called once the device is registered successfully with Apple or Google servers
+			window.plugins.PushbotsPlugin.on("registered", function(token){
+				console.log("Token de registro", token);
+			});
+			
+			//Get device token
+			window.plugins.PushbotsPlugin.getRegistrationId(function(token){
+			    console.log("Registration Id:" + token);
+			});	
+			
+			window.plugins.PushbotsPlugin.on("user:ids", function (data) {
+				console.log("user:ids" + JSON.stringify(data));
+				// userToken = data.token; 
+				// userId = data.userId
+			});
+			
+			window.plugins.PushbotsPlugin.resetBadge();
+			
+			window.plugins.PushbotsPlugin.toggleNotifications(true);
+			var celular = window.localStorage.getItem("celular");
+			window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
+			
 			showPanel("listaMensajes", function(){
 				getMensajes({
 					after: function(mensajes){
