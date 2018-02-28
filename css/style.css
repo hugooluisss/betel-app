@@ -53,5 +53,8 @@ body[modulo="login"] .navbar .navbar-brand .img-responsive {
   height: 40px;
   display: inline;
 }
+body[modulo="mensajes"] .container {
+  padding-top: 80px;
+}
 
 /*# sourceMappingURL=style.css.map */

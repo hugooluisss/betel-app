@@ -50,6 +50,7 @@ var app = {
 			var datos = JSON.stringify(data);
 			window.plugins.PushbotsPlugin.resetBadge();
 			
+			/*
 			//Silent notifications Only [iOS only]
 			//Send CompletionHandler signal with PushBots notification Id
 			window.plugins.PushbotsPlugin.done(data.pb_n_id);
@@ -57,6 +58,7 @@ var app = {
 				alertify.success(data.aps.alert);
 				
 			window.plugins.PushbotsPlugin.resetBadge();
+			*/
 		});
 		
 		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){

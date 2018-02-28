@@ -109,6 +109,7 @@ var app = {
 			window.plugins.PushbotsPlugin.resetBadge();
 			
 			window.plugins.PushbotsPlugin.toggleNotifications(true);
+			window.plugins.PushbotsPlugin.debug(true);
 			var celular = window.localStorage.getItem("celular");
 			window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
 			
