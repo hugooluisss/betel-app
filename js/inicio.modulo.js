@@ -148,6 +148,9 @@ var app = {
 		    		if(buttonIndex == 1) {
 			    		db.transaction(function(tx){
 			    			tx.executeSql("delete from mensaje", [], function(tx, rs){
+			    				var celular = window.localStorage.getItem("celular");
+			    				window.plugins.PushbotsPlugin.removeAlias();
+			
 			    				window.localStorage.removeItem("sesion");
 			    				window.localStorage.removeItem("fecha");
 			    				location.href = "index.html";

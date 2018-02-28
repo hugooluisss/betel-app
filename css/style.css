@@ -1,0 +1,57 @@
+html {
+  height: 100%;
+}
+body {
+  background: #D8D8D8;
+  height: 100%;
+}
+body input::-webkit-input-placeholder {
+  text-align: center;
+}
+body input:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center;
+}
+body input::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center;
+}
+body input:-ms-input-placeholder {
+  text-align: center;
+}
+body .btn-success {
+  background: #00a65a;
+}
+body .btn-secondary {
+  background: #585858;
+  color: white;
+}
+body .btn-secondary:hover {
+  background: #ffffff;
+}
+body .navbar {
+  background: #00a65a;
+}
+body .navbar .navbar-brand {
+  padding: 5px 5px;
+  margin-top: 5px;
+}
+body .navbar .navbar-brand .img-responsive {
+  height: 100%;
+}
+body .navbar .navbar-text a {
+  color: white;
+}
+body [panel] {
+  display: none;
+}
+body[modulo="login"] .navbar .navbar-brand {
+  width: 100%;
+  text-align: center;
+}
+body[modulo="login"] .navbar .navbar-brand .img-responsive {
+  height: 40px;
+  display: inline;
+}
+
+/*# sourceMappingURL=style.css.map */
