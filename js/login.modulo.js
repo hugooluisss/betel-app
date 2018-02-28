@@ -38,7 +38,7 @@ var app = {
 			return false;
 		}, true);
 		
-		window.plugins.PushbotsPlugin.initialize(ServerAPI, {
+		window.plugins.PushbotsPlugin.initialize(applicationId, {
 			"android":{
 				"sender_id": SenderID
 			}
