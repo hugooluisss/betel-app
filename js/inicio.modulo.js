@@ -89,13 +89,6 @@ var app = {
 			// userId = data.userId
 		});
 		
-		window.plugins.PushbotsPlugin.resetBadge();
-		
-		window.plugins.PushbotsPlugin.toggleNotifications(true);
-		window.plugins.PushbotsPlugin.debug(true);
-		var celular = window.localStorage.getItem("celular");
-		window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
-		
 		
 		var codigo = window.localStorage.getItem("sesion");
 		if (codigo == null && codigo == undefined && codigo == ''){
@@ -126,6 +119,13 @@ var app = {
 					}
 				});
 			});
+			
+			window.plugins.PushbotsPlugin.resetBadge();
+			
+			window.plugins.PushbotsPlugin.toggleNotifications(true);
+			//window.plugins.PushbotsPlugin.debug(true);
+			var celular = window.localStorage.getItem("celular");
+			window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
 		}
 		
 		$("#showMensajes").click(function(){

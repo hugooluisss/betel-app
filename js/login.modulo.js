@@ -69,6 +69,8 @@ var app = {
 			window.plugins.PushbotsPlugin.resetBadge();
 		});
 		
+		window.plugins.PushbotsPlugin.removeAlias();
+		
 		//window.localStorage.removeItem("sesion");
 		var codigo = window.localStorage.getItem("sesion");
 		
