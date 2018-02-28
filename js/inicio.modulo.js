@@ -65,6 +65,7 @@ var app = {
 			// Should be called once app receive the notification only while the application is open or in background
 			window.plugins.PushbotsPlugin.on("notification:received", function(data){
 				console.log("received:", data);
+				alert("Debug de la aplicacion received");
 				var datos = JSON.stringify(data);
 				window.plugins.PushbotsPlugin.resetBadge();
 				
@@ -79,7 +80,8 @@ var app = {
 			
 			// Should be called once the notification is clicked
 			window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
-				alert("Debug de la aplicacion");
+				location.reload(true);
+				
 				console.log("clicked:" + JSON.stringify(data));
 				if (data.message != undefined)
 					alertify.success(data.message);
@@ -203,7 +205,6 @@ function addMensaje(mensaje){
 			});
 		}
 	});
-	console.log(li);
 }
 
 function getRemoteMensajes(){
@@ -231,12 +232,10 @@ function getRemoteMensajes(){
 								if (rs.rows.length == 0)
 									tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, 1, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
 										addMensaje(mensaje);
-										console.log(mensaje, "insertado");
 									}, errorDB);
 								else
 									tx.executeSql('update mensaje set titulo = ?, fecha = ?, mensaje = ?, estado = ?, actualiza = 0 where referencia = ?', [mensaje.titulo, mensaje.fecha, mensaje.mensaje, mensaje.estado, mensaje.idMensaje], function(){
 										//addMensaje(mensaje);
-										console.log(mensaje, "Actualizado");
 									}, errorDB);
 							}, errorDB);
 						});
