@@ -171,7 +171,7 @@ $(document).ready(function(){
 function addMensaje(mensaje){
 	var titulo = $("<b />", {
 		class: "mb-1",
-		text: mensaje.titulo + "&nbsp;"
+		text: mensaje.titulo + " "
 	});
 	
 	var li = $("<li />", {
