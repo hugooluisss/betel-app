@@ -38,14 +38,14 @@ var app = {
 			return false;
 		}, true);
 		
-		window.plugins.PushbotsPlugin.initialize(applicationId, {
+		PushbotsPlugin.initialize(applicationId, {
 			"android":{
 				"sender_id": SenderID
 			}
 		});
 		
 		// Should be called once app receive the notification only while the application is open or in background
-		window.plugins.PushbotsPlugin.on("notification:received", function(data){
+		PushbotsPlugin.on("notification:received", function(data){
 			console.log("received:", data);
 			var datos = JSON.stringify(data);
 			window.plugins.PushbotsPlugin.resetBadge();
@@ -61,7 +61,7 @@ var app = {
 			*/
 		});
 		
-		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
+		PushbotsPlugin.on("notification:clicked", function(data){
 			console.log("clicked:" + JSON.stringify(data));
 			if (data.message != undefined)
 				alertify.success(data.message);
@@ -69,7 +69,7 @@ var app = {
 			window.plugins.PushbotsPlugin.resetBadge();
 		});
 		
-		window.plugins.PushbotsPlugin.removeAlias();
+		PushbotsPlugin.removeAlias();
 		
 		//window.localStorage.removeItem("sesion");
 		var codigo = window.localStorage.getItem("sesion");
