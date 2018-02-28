@@ -79,6 +79,7 @@ var app = {
 			
 			// Should be called once the notification is clicked
 			window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
+				alert("Debug de la aplicacion");
 				console.log("clicked:" + JSON.stringify(data));
 				if (data.message != undefined)
 					alertify.success(data.message);
