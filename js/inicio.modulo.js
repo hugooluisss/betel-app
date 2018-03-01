@@ -38,7 +38,8 @@ var app = {
 		document.addEventListener("backbutton", function(){
 			return false;
 		}, true);
-		
+		console.log(applicationId);
+		alert("Hola mundo");
 		window.plugins.PushbotsPlugin.initialize(applicationId, {
 			"android":{
 				"sender_id": SenderID
