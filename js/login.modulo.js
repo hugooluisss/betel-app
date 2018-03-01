@@ -37,7 +37,7 @@ var app = {
 		document.addEventListener("backbutton", function(){
 			return false;
 		}, true);
-		
+		/*
 		window.plugins.PushbotsPlugin.initialize(applicationId, {
 			"android":{
 				"sender_id": SenderID
@@ -74,7 +74,7 @@ var app = {
 				alertify.success(data.aps.alert);
 				
 			window.plugins.PushbotsPlugin.resetBadge();
-			*/
+			*//*
 		});
 		
 		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
@@ -86,7 +86,7 @@ var app = {
 		});
 		
 		window.plugins.PushbotsPlugin.removeAlias();
-		
+		*/
 		//window.localStorage.removeItem("sesion");
 		var codigo = window.localStorage.getItem("sesion");
 		

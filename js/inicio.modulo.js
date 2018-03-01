@@ -43,7 +43,7 @@ var app = {
 		// Should be called once app receive the notification only while the application is open or in background
 		window.plugins.PushbotsPlugin.on("notification:received", function(data){
 			console.log("received:", data);
-			alert("Debug de la aplicacion received");
+			getRemoteMensajes();
 			var datos = JSON.stringify(data);
 			window.plugins.PushbotsPlugin.resetBadge();
 			
@@ -58,7 +58,7 @@ var app = {
 		
 		// Should be called once the notification is clicked
 		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
-			location.reload(true);
+			getRemoteMensajes();
 			
 			console.log("clicked:" + JSON.stringify(data));
 			if (data.message != undefined)
