@@ -39,7 +39,7 @@ var app = {
 			return false;
 		}, true);
 		console.log(applicationId);
-		alert("Hola mundo");
+
 		window.plugins.PushbotsPlugin.initialize(applicationId, {
 			"android":{
 				"sender_id": SenderID
