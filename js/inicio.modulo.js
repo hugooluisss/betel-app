@@ -62,34 +62,6 @@ var app = {
 			// userId = data.userId
 		});
 		
-		
-		// Should be called once app receive the notification only while the application is open or in background
-		window.plugins.PushbotsPlugin.on("notification:received", function(data){
-			console.log("received:", data);
-			getRemoteMensajes();
-			var datos = JSON.stringify(data);
-			window.plugins.PushbotsPlugin.resetBadge();
-			
-			//Silent notifications Only [iOS only]
-			//Send CompletionHandler signal with PushBots notification Id
-			window.plugins.PushbotsPlugin.done(data.pb_n_id);
-			if (data.aps.alert != '')
-				alertify.success(data.aps.alert);
-				
-			window.plugins.PushbotsPlugin.resetBadge();
-		});
-		
-		// Should be called once the notification is clicked
-		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
-			getRemoteMensajes();
-			
-			console.log("clicked:" + JSON.stringify(data));
-			if (data.message != undefined)
-				alertify.success(data.message);
-				
-			window.plugins.PushbotsPlugin.resetBadge();
-		});
-		
 		var codigo = window.localStorage.getItem("sesion");
 		if (codigo == null && codigo == undefined && codigo == ''){
 			location.href = "index.html";
@@ -127,6 +99,35 @@ var app = {
 			var celular = window.localStorage.getItem("celular");
 			window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
 		}
+		
+		
+		// Should be called once app receive the notification only while the application is open or in background
+		window.plugins.PushbotsPlugin.on("notification:received", function(data){
+			console.log("received:", data);
+			getRemoteMensajes();
+			var datos = JSON.stringify(data);
+			window.plugins.PushbotsPlugin.resetBadge();
+			
+			//Silent notifications Only [iOS only]
+			//Send CompletionHandler signal with PushBots notification Id
+			window.plugins.PushbotsPlugin.done(data.pb_n_id);
+			if (data.aps.alert != '')
+				alertify.success(data.aps.alert);
+				
+			window.plugins.PushbotsPlugin.resetBadge();
+		});
+		
+		// Should be called once the notification is clicked
+		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
+			getRemoteMensajes();
+			
+			console.log("clicked:" + JSON.stringify(data));
+			if (data.message != undefined)
+				alertify.success(data.message);
+				
+			window.plugins.PushbotsPlugin.resetBadge();
+		});
+		
 		
 		$("#showMensajes").click(function(){
 			showPanel("listaMensajes");
