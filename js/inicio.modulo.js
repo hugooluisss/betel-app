@@ -39,6 +39,28 @@ var app = {
 			return false;
 		}, true);
 		
+		window.plugins.PushbotsPlugin.initialize(applicationId, {
+			"android":{
+				"sender_id": SenderID
+			}
+		});
+		//window.plugins.PushbotsPlugin.debug(true);
+		// Should be called once the device is registered successfully with Apple or Google servers
+		window.plugins.PushbotsPlugin.on("registered", function(token){
+			console.log("Token de registro", token);
+		});
+		
+		//Get device token
+		window.plugins.PushbotsPlugin.getRegistrationId(function(token){
+		    console.log("Registration Id:" + token);
+		});	
+		
+		window.plugins.PushbotsPlugin.on("user:ids", function (data) {
+			console.log("user:ids" + JSON.stringify(data));
+			// userToken = data.token; 
+			// userId = data.userId
+		});
+		
 		
 		// Should be called once app receive the notification only while the application is open or in background
 		window.plugins.PushbotsPlugin.on("notification:received", function(data){
@@ -65,30 +87,7 @@ var app = {
 				alertify.success(data.message);
 				
 			window.plugins.PushbotsPlugin.resetBadge();
-		});	
-		
-		window.plugins.PushbotsPlugin.initialize(applicationId, {
-			"android":{
-				"sender_id": SenderID
-			}
 		});
-		//window.plugins.PushbotsPlugin.debug(true);
-		// Should be called once the device is registered successfully with Apple or Google servers
-		window.plugins.PushbotsPlugin.on("registered", function(token){
-			console.log("Token de registro", token);
-		});
-		
-		//Get device token
-		window.plugins.PushbotsPlugin.getRegistrationId(function(token){
-		    console.log("Registration Id:" + token);
-		});	
-		
-		window.plugins.PushbotsPlugin.on("user:ids", function (data) {
-			console.log("user:ids" + JSON.stringify(data));
-			// userToken = data.token; 
-			// userId = data.userId
-		});
-		
 		
 		var codigo = window.localStorage.getItem("sesion");
 		if (codigo == null && codigo == undefined && codigo == ''){
