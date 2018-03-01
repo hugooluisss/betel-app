@@ -39,11 +39,6 @@ var app = {
 			return false;
 		}, true);
 		
-		window.plugins.PushbotsPlugin.initialize(applicationId, {
-			"android":{
-				"sender_id": SenderID
-			}
-		});
 		
 		// Should be called once app receive the notification only while the application is open or in background
 		window.plugins.PushbotsPlugin.on("notification:received", function(data){
@@ -72,6 +67,11 @@ var app = {
 			window.plugins.PushbotsPlugin.resetBadge();
 		});	
 		
+		window.plugins.PushbotsPlugin.initialize(applicationId, {
+			"android":{
+				"sender_id": SenderID
+			}
+		});
 		//window.plugins.PushbotsPlugin.debug(true);
 		// Should be called once the device is registered successfully with Apple or Google servers
 		window.plugins.PushbotsPlugin.on("registered", function(token){
