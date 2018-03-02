@@ -167,7 +167,6 @@ var app = {
 	}
 };
 
-
 app.initialize();
 
 $(document).ready(function(){
@@ -175,7 +174,7 @@ $(document).ready(function(){
 });
 
 function addMensaje(mensaje){
-	var titulo = $("<b />", {
+	var titulo = $("<span />", {
 		class: "mb-1",
 		text: mensaje.titulo + " "
 	});
@@ -184,7 +183,7 @@ function addMensaje(mensaje){
 		class: "list-group-item"
 	});
 	
-	li.append(titulo).append('<small>' + mensaje.fecha + '</small>');
+	li.append(titulo).append('<span class="badge">' + mensaje.fecha + '</span>');
 	li.attr("data", JSON.stringify(mensaje));
 	$(".listaMensajes").append(li);
 	
