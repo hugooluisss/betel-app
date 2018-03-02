@@ -74,8 +74,7 @@ var mensajes = {
 };
 
 
-function checkConnection(alertar) {
-	alertar = alertar | true;
+function checkConnection(alertar = true) {
 	try{
 		var networkState = navigator.connection.type;
 	
