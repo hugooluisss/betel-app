@@ -37,7 +37,7 @@ var app = {
 		document.addEventListener("backbutton", function(){
 			return false;
 		}, true);
-		/*
+		
 		window.plugins.PushbotsPlugin.initialize(applicationId, {
 			"android":{
 				"sender_id": SenderID
@@ -66,27 +66,26 @@ var app = {
 			var datos = JSON.stringify(data);
 			window.plugins.PushbotsPlugin.resetBadge();
 			
-			/*
 			//Silent notifications Only [iOS only]
 			//Send CompletionHandler signal with PushBots notification Id
 			window.plugins.PushbotsPlugin.done(data.pb_n_id);
 			if (data.aps.alert != '')
-				alertify.success(data.aps.alert);
+				alertify.log(data.aps.alert);
 				
 			window.plugins.PushbotsPlugin.resetBadge();
-			*//*
+			
 		});
 		
 		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
 			console.log("clicked:" + JSON.stringify(data));
 			if (data.message != undefined)
-				alertify.success(data.message);
+				alertify.log(data.message);
 				
 			window.plugins.PushbotsPlugin.resetBadge();
 		});
 		
 		window.plugins.PushbotsPlugin.removeAlias();
-		*/
+		
 		//window.localStorage.removeItem("sesion");
 		var codigo = window.localStorage.getItem("sesion");
 		

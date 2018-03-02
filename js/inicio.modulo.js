@@ -54,7 +54,7 @@ var app = {
 		window.plugins.PushbotsPlugin.on("notification:clicked", function(data){
 			console.log("clicked:" + JSON.stringify(data));
 			if (data.message != undefined)
-				alertify.success(data.message);
+				alertify.log(data.message);
 				
 			window.plugins.PushbotsPlugin.resetBadge();
 		});
@@ -202,50 +202,65 @@ function addMensaje(mensaje){
 }
 
 function getRemoteMensajes(){
-	var objUser = new TUsuario;
-	//window.localStorage.removeItem("fecha");
-	var inicio = window.localStorage.getItem("fecha");
-	result = new Array();
-	
-	
-	$("#actualizarMensajes").addClass("fa-spin");
-	
-	db.transaction(function(tx) {
-		tx.executeSql('SELECT * FROM mensaje where actualiza = 1 order by referencia desc', [], function(tx, rs) {
-			for (i = 0 ; i < rs.rows.length ; i++){
-				result.push(rs.rows.item(i));
-			}
-			objUser.getMensajes({
-				"inicio": inicio,
-				"actualizacion": JSON.stringify(result),
-				after: function(resp){
-					$("#actualizarMensajes").removeClass("fa-spin");
-					db.transaction(function(tx){
-						$.each(resp, function(i, mensaje){
-							tx.executeSql("select * from mensaje where referencia = ? ", [mensaje.idMensaje], function(tx, rs){
-								if (rs.rows.length == 0)
-									tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, 1, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
-										addMensaje(mensaje);
-									}, errorDB);
-								else
-									tx.executeSql('update mensaje set titulo = ?, fecha = ?, mensaje = ?, estado = ?, actualiza = 0 where referencia = ?', [mensaje.titulo, mensaje.fecha, mensaje.mensaje, mensaje.estado, mensaje.idMensaje], function(){
-										//addMensaje(mensaje);
-									}, errorDB);
-							}, errorDB);
+	if(checkConnection()){
+		var objUser = new TUsuario;
+		//window.localStorage.removeItem("fecha");
+		var inicio = window.localStorage.getItem("fecha");
+		result = new Array();
+		
+		
+		$("#actualizarMensajes").addClass("fa-spin");
+		
+		db.transaction(function(tx) {
+			tx.executeSql('SELECT * FROM mensaje where actualiza = 1 order by referencia desc', [], function(tx, rs) {
+				for (i = 0 ; i < rs.rows.length ; i++){
+					result.push(rs.rows.item(i));
+				}
+				
+				objUser.getMensajes({
+					"inicio": inicio,
+					"actualizacion": JSON.stringify(result),
+					after: function(resp){
+						$("#actualizarMensajes").removeClass("fa-spin");
+						db.transaction(function(tx){
+							var cont = 0;
+							$.each(resp, function(i, mensaje){
+								tx.executeSql("select * from mensaje where referencia = ? ", [mensaje.idMensaje], function(tx, rs){
+									cont++;
+									if (rs.rows.length == 0)
+										tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, 1, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
+											addMensaje(mensaje);
+										}, errorDB);
+									else
+										tx.executeSql('update mensaje set titulo = ?, fecha = ?, mensaje = ?, estado = ?, actualiza = 0 where referencia = ?', [mensaje.titulo, mensaje.fecha, mensaje.mensaje, mensaje.estado, mensaje.idMensaje], function(){
+											//addMensaje(mensaje);
+										}, errorDB);
+								}, errorDB);
+								
+								if (cont > 0 && cont == rs.rows.length)
+									getMensajes({
+										after: function(mensajes){
+											$(".listaMensajes").find("li").remove();
+											$.each(mensajes, function(i, mensaje){
+												addMensaje(mensaje);
+											});
+										}
+									});
+							});
+							
+							tx.executeSql('update mensaje set actualiza = 0 where actualiza = 1', [], function(tx, rs){}, errorDB);
 						});
 						
-						tx.executeSql('update mensaje set actualiza = 0 where actualiza = 1', [], function(tx, rs){}, errorDB);
-					});
-					
-					var hoy = new Date();
-					inicio = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
-					window.localStorage.setItem("fecha", inicio);
-				}
-			});
-			
-			//if (datos.after !== undefined) datos.after(result);
-		}, errorDB);
-	});
+						var hoy = new Date();
+						inicio = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
+						window.localStorage.setItem("fecha", inicio);
+					}
+				});
+				
+				//if (datos.after !== undefined) datos.after(result);
+			}, errorDB);
+		});
+	}
 }
 
 function getMensajes(datos){
