@@ -233,19 +233,20 @@ function getRemoteMensajes(alertar = true){
 							$.each(resp, function(i, mensaje){
 								tx.executeSql("select * from mensaje where referencia = ? ", [mensaje.idMensaje], function(tx, rs){
 									cont++;
-									if (rs.rows.length == 0)
+									if (rs.rows.length == 0){
 										tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, 1, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
 											addMensaje(mensaje);
-											nuevos++;
 										}, errorDB);
-									else
+										nuevos++;
+									}else
 										tx.executeSql('update mensaje set titulo = ?, fecha = ?, mensaje = ?, estado = ?, actualiza = 0 where referencia = ?', [mensaje.titulo, mensaje.fecha, mensaje.mensaje, mensaje.estado, mensaje.idMensaje], function(){
 											//addMensaje(mensaje);
 										}, errorDB);
 								}, errorDB);
 							});
 							
-							alertify.log("Recibiste " + nuevos + " nuevo(s) mensaje(s)");
+							if (nuevos > 0)
+								alertify.log("Recibiste " + nuevos + " nuevo(s) mensaje(s)");
 							
 							tx.executeSql('update mensaje set actualiza = 0 where actualiza = 1', [], function(tx, rs){}, errorDB);
 						});
