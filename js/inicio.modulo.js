@@ -183,7 +183,7 @@ function addMensaje(mensaje){
 		class: "list-group-item"
 	});
 	
-	li.append(titulo).append('<br /><span class="badge">' + mensaje.fecha + '</span>');
+	li.prepend(titulo); //.append('<br /><span class="badge">' + mensaje.fecha + '</span>');
 	li.attr("data", JSON.stringify(mensaje));
 	$(".listaMensajes").append(li);
 	
@@ -271,7 +271,7 @@ function getRemoteMensajes(alertar = true){
 function getMensajes(datos){
 	if (datos.before !== undefined) datos.before();
 	db.transaction(function(tx) {
-		tx.executeSql('SELECT * FROM mensaje order by referencia desc', [], function(tx, rs) {
+		tx.executeSql('SELECT * FROM mensaje order by referencia asc', [], function(tx, rs) {
 			result = new Array();
 			for (i = 0 ; i < rs.rows.length ; i++){
 				result.push(rs.rows.item(i));
