@@ -229,29 +229,23 @@ function getRemoteMensajes(alertar = true){
 						$("#actualizarMensajes").removeClass("fa-spin");
 						db.transaction(function(tx){
 							var cont = 0;
+							var nuevos = 0;
 							$.each(resp, function(i, mensaje){
 								tx.executeSql("select * from mensaje where referencia = ? ", [mensaje.idMensaje], function(tx, rs){
 									cont++;
 									if (rs.rows.length == 0)
 										tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, 1, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
 											addMensaje(mensaje);
+											nuevos++;
 										}, errorDB);
 									else
 										tx.executeSql('update mensaje set titulo = ?, fecha = ?, mensaje = ?, estado = ?, actualiza = 0 where referencia = ?', [mensaje.titulo, mensaje.fecha, mensaje.mensaje, mensaje.estado, mensaje.idMensaje], function(){
 											//addMensaje(mensaje);
 										}, errorDB);
 								}, errorDB);
-								
-								if (cont > 0 && cont == rs.rows.length)
-									getMensajes({
-										after: function(mensajes){
-											$(".listaMensajes").find("li").remove();
-											$.each(mensajes, function(i, mensaje){
-												addMensaje(mensaje);
-											});
-										}
-									});
 							});
+							
+							alertify.log("Recibiste " + nuevos + " nuevo(s) mensaje(s)");
 							
 							tx.executeSql('update mensaje set actualiza = 0 where actualiza = 1', [], function(tx, rs){}, errorDB);
 						});
