@@ -247,9 +247,10 @@ function getRemoteMensajes(alertar = true){
 										
 										
 									if (resp.length <= cont && band){
-										band = false;
-										if (nuevos > 0)
-											alertify.log("Recibiste " + nuevos + " nuevo(s) mensaje(s)");
+										if (nuevos > 0){
+											alertify.log("Tienes nuevos mensajes");
+											band = false;
+										}
 									}
 								}, errorDB);
 								
