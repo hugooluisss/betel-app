@@ -176,16 +176,16 @@ $(document).ready(function(){
 function addMensaje(mensaje){
 	var titulo = $("<span />", {
 		class: "mb-1",
-		text: mensaje.titulo + " "
+		text: mensaje.titulo
 	});
 	
 	var li = $("<li />", {
 		class: "list-group-item"
 	});
 	
-	li.prepend(titulo); //.append('<br /><span class="badge">' + mensaje.fecha + '</span>');
+	li.append(titulo); //.append('<br /><span class="badge">' + mensaje.fecha + '</span>');
 	li.attr("data", JSON.stringify(mensaje));
-	$(".listaMensajes").append(li);
+	$(".listaMensajes").prepend(li);
 	
 	li.click(function(){
 		var mensaje = jQuery.parseJSON($(this).attr("data"));
