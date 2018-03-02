@@ -243,10 +243,10 @@ function getRemoteMensajes(alertar = true){
 											//addMensaje(mensaje);
 										}, errorDB);
 								}, errorDB);
+								
+								if (nuevos > 0)
+									alertify.log("Recibiste " + nuevos + " nuevo(s) mensaje(s)");
 							});
-							
-							if (nuevos > 0)
-								alertify.log("Recibiste " + nuevos + " nuevo(s) mensaje(s)");
 							
 							tx.executeSql('update mensaje set actualiza = 0 where actualiza = 1', [], function(tx, rs){}, errorDB);
 						});
