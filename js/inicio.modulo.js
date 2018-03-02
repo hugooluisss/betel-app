@@ -230,6 +230,7 @@ function getRemoteMensajes(alertar = true){
 						db.transaction(function(tx){
 							var cont = 0;
 							var nuevos = 0;
+							var band = true;
 							$.each(resp, function(i, mensaje){
 								cont++;
 								tx.executeSql("select * from mensaje where referencia = ? ", [mensaje.idMensaje], function(tx, rs){
@@ -245,9 +246,11 @@ function getRemoteMensajes(alertar = true){
 										}, errorDB);
 										
 										
-									if (resp.length <= cont)
+									if (resp.length <= cont && band){
+										band = false;
 										if (nuevos > 0)
 											alertify.log("Recibiste " + nuevos + " nuevo(s) mensaje(s)");
+									}
 								}, errorDB);
 								
 								
