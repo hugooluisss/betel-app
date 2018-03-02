@@ -161,11 +161,13 @@ var app = {
 		});
 	}
 	
-	setInterval(function(){
+	setInterval(function(){checkMsg()}, 10 * 1000);
+	
+	function checkMsg(){
 		if(checkConnection(false))
 			getRemoteMensajes(false);
 		
-	}, 10 * 1000);
+	}
 };
 
 
