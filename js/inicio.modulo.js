@@ -183,7 +183,7 @@ function addMensaje(mensaje){
 		class: "list-group-item"
 	});
 	
-	li.append(titulo).append('<span class="badge">' + mensaje.fecha + '</span>');
+	li.append(titulo).append('<br /><span class="badge">' + mensaje.fecha + '</span>');
 	li.attr("data", JSON.stringify(mensaje));
 	$(".listaMensajes").append(li);
 	
