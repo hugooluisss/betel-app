@@ -160,7 +160,14 @@ var app = {
 	    	});
 		});
 	}
+	
+	setInterval(function(){
+		if(checkConnection(false))
+			getRemoteMensajes(false);
+		
+	}, 10 * 1000);
 };
+
 
 app.initialize();
 
@@ -201,8 +208,9 @@ function addMensaje(mensaje){
 	});
 }
 
-function getRemoteMensajes(){
-	if(checkConnection()){
+function getRemoteMensajes(alertar){
+	var alertar = alertar | true;
+	if(checkConnection(alertar)){
 		var objUser = new TUsuario;
 		//window.localStorage.removeItem("fecha");
 		var inicio = window.localStorage.getItem("fecha");

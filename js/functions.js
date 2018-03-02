@@ -74,7 +74,8 @@ var mensajes = {
 };
 
 
-function checkConnection() {
+function checkConnection(alertar) {
+	alertar = alertar | true;
 	try{
 		var networkState = navigator.connection.type;
 	
@@ -89,8 +90,10 @@ function checkConnection() {
 		states[Connection.NONE]     = 'No network connection';
 		
 		switch(networkState){
-			case Connection.NONE: 
-				alertify.error("Verifica tu conexión, la aplicación necesita conexión a internet");
+			case Connection.NONE:
+				if(alertar)
+					alertify.error("Verifica tu conexión, la aplicación necesita conexión a internet");
+					
 				return false;
 			break;
 			default:
