@@ -124,7 +124,10 @@ var app = {
 						
 						console.log(data);
 						if (data.band == false){
-							mensajes.alert({mensaje: "No se pudo enviar el SMS con el código, verifica que el número de tu telefono sea correcto", title: "Erro al enviar el código"});
+							if (data.mensaje != '')
+								mensajes.alert({mensaje: data.mensaje, title: "Error en el teléfono"});
+							else
+							mensajes.alert({mensaje: "No se pudo enviar el SMS con el código, verifica que el número de tu telefono sea correcto", title: "Error al enviar el código"});
 							$("#frmLogin [type=submit]").prop("disabled", false);
 							
 							showPanel("bienvenida", function(){
@@ -161,7 +164,6 @@ var app = {
 							$("#txtCodigo").select();
 						}else{
 							window.localStorage.setItem("sesion", $("#txtCodigo").val());
-							mensajes.alert({mensaje: "Bienvenido...", title: "Código correcto"});
 							location.href = "inicio.html";
 						}
 					}

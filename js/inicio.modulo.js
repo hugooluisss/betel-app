@@ -38,7 +38,7 @@ var app = {
 		document.addEventListener("backbutton", function(){
 			return false;
 		}, true);
-				
+		/*		
 		// Should be called once app receive the notification only while the application is open or in background
 		window.plugins.PushbotsPlugin.on("notification:received", function(data){
 			console.log("received:", data);
@@ -81,7 +81,7 @@ var app = {
 			// userToken = data.token; 
 			// userId = data.userId
 		});
-		
+		*/
 		var codigo = window.localStorage.getItem("sesion");
 		if (codigo == null && codigo == undefined && codigo == ''){
 			location.href = "index.html";
@@ -111,13 +111,14 @@ var app = {
 					}
 				});
 			});
-			
+			/*
 			window.plugins.PushbotsPlugin.resetBadge();
 			
 			window.plugins.PushbotsPlugin.toggleNotifications(true);
+			*/
 			//window.plugins.PushbotsPlugin.debug(true);
 			var celular = window.localStorage.getItem("celular");
-			window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
+			//window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
 		}		
 		
 		$("#showMensajes").click(function(){
@@ -167,10 +168,10 @@ var app = {
 	}
 };
 
-app.initialize();
+//app.initialize();
 
 $(document).ready(function(){
-	//app.onDeviceReady();
+	app.onDeviceReady();
 });
 
 function addMensaje(mensaje){
@@ -193,7 +194,7 @@ function addMensaje(mensaje){
 			$("[panel=mensaje]").find("[campo=" + key + "]").html(valor);
 		});
 		
-		showPanel("mensaje");
+		showPanel("mensaje", fadeleft);
 		
 		if (mensaje.estado < 2){		
 			db.transaction(function(tx){

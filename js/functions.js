@@ -5,13 +5,20 @@ ServerAPI = "AlzaSyB9dNgR4Ly7Ich63FIHIFbZd1_zOdcg9OI";
 applicationId = "5a96c15c1db2dc10a0165814";
 SenderID = "600570554530";
 
-function showPanel(panel, after){
+function showPanel(panel, after, efecto){
 	$("[panel]").hide();
 	
 	if (after == undefined)
-		$("[panel=" + panel + "]").show("slow");
-	else
-		$("[panel=" + panel + "]").show("slow", after);
+		after = null;
+	
+	switch(efecto){
+		case 'fadeleft':
+			$("[panel=" + panel + "]").show("slide", { direction: "left" }, 500);
+		break;
+		default:
+			$("[panel=" + panel + "]").show("slow", after);
+			
+	}
 }
 
 
