@@ -26,8 +26,8 @@
 		<link href="librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		
 		<link rel="stylesheet" href="librerias/awesome/css/font-awesome.min.css" />
-		<!--<link rel="stylesheet/less" type="text/css" href="css/style.less"/>-->
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet/less" type="text/css" href="css/style.less"/>
+		<!--<link rel="stylesheet" type="text/css" href="css/style.css"/>-->
 		<script type="text/javascript" src="cordova.js"></script>
 		<link rel="stylesheet" href="librerias/plugins/tether/css/tether-theme-basic.min.css" />
         <link rel="stylesheet" href="librerias/plugins/tether/css/tether.min.css" />
@@ -38,7 +38,7 @@
 			<a class="navbar-brand" href="#">
 				<img src="images/logo-hb.png" class="img-responsive"/>
 			</a>
-			<span class="navbar-text pull-right">
+			<div class="navbar-text pull-right">
 				<a href="#" class="btn btn-link" id="actualizarMensajes">
 					<i class="fa fa-refresh fa-2x"></i>
 				</a>
@@ -46,9 +46,8 @@
 				<a href="#" class="btn btn-link" id="salir">
 					<i class="fa fa-sign-out fa-2x"></i>
 				</a>
-
 				&nbsp;
-			</span>
+			</div>
 		</nav>
 		
 		<div class="container" panel="listaMensajes" style="display: show">
@@ -69,7 +68,7 @@
 			<div class="panel panel-deafult">
 				<div class="panel-heading">
 					<h4 campo="titulo">Título</h4>
-					<div class="text-right text-muted"><small campo="fecha">Fecha y hora</small></div>
+					<div class="text-left text-muted"><small campo="fecha">Fecha y hora</small></div>
 				</div>
 				<div class="panel-body" campo="mensaje">
 					Cuerpo del mensaje

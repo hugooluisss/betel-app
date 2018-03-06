@@ -38,7 +38,7 @@ var app = {
 		document.addEventListener("backbutton", function(){
 			return false;
 		}, true);
-		/*		
+				
 		// Should be called once app receive the notification only while the application is open or in background
 		window.plugins.PushbotsPlugin.on("notification:received", function(data){
 			console.log("received:", data);
@@ -81,7 +81,7 @@ var app = {
 			// userToken = data.token; 
 			// userId = data.userId
 		});
-		*/
+		
 		var codigo = window.localStorage.getItem("sesion");
 		if (codigo == null && codigo == undefined && codigo == ''){
 			location.href = "index.html";
@@ -111,18 +111,18 @@ var app = {
 					}
 				});
 			});
-			/*
+			
 			window.plugins.PushbotsPlugin.resetBadge();
 			
 			window.plugins.PushbotsPlugin.toggleNotifications(true);
-			*/
+			
 			//window.plugins.PushbotsPlugin.debug(true);
 			var celular = window.localStorage.getItem("celular");
-			//window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
+			window.plugins.PushbotsPlugin.setAlias("cel_" + celular);
 		}		
 		
 		$("#showMensajes").click(function(){
-			showPanel("listaMensajes");
+			$("[panel=mensaje]").hide("slide", { direction: "right" }, 500);
 		});
 		
 		$("#actualizarMensajes").click(function(){
@@ -147,7 +147,7 @@ var app = {
 			    		db.transaction(function(tx){
 			    			tx.executeSql("delete from mensaje", [], function(tx, rs){
 			    				var celular = window.localStorage.getItem("celular");
-			    				window.plugins.PushbotsPlugin.removeAlias();
+			    				//window.plugins.PushbotsPlugin.removeAlias();
 			
 			    				window.localStorage.removeItem("sesion");
 			    				window.localStorage.removeItem("fecha");
@@ -168,10 +168,10 @@ var app = {
 	}
 };
 
-//app.initialize();
+app.initialize();
 
 $(document).ready(function(){
-	app.onDeviceReady();
+	//app.onDeviceReady();
 });
 
 function addMensaje(mensaje){
@@ -194,13 +194,22 @@ function addMensaje(mensaje){
 			$("[panel=mensaje]").find("[campo=" + key + "]").html(valor);
 		});
 		
-		showPanel("mensaje", fadeleft);
+		var fecha = mensaje.fecha.split(" ");
+		fecha = fecha[0].split("-");
 		
-		if (mensaje.estado < 2){		
+		$("[panel=mensaje]").find("[campo=fecha]").html(fecha[2] + "/" + fecha[1] + "/" + fecha[0]);
+		
+		
+		
+		$("[panel=mensaje]").show("slide", { direction: "right" }, 500);
+		
+		if (mensaje.estado < 2){
+			li.removeClass("leido");	
 			db.transaction(function(tx){
 				var hoy = new Date();
 				fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
 				tx.executeSql("update mensaje set estado = 2, actualiza = 1 where referencia = ? ", [mensaje.referencia], function(tx, rs){
+					li.addClass("leido");
 				}, errorDB);
 			});
 		}

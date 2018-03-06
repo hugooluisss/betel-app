@@ -1,5 +1,6 @@
 var server = "http://192.168.2.4/betel-web/";
-var server = "http://www.colegiobetel.edu.uy/web/mensajes/";
+var server = "http://192.168.0.12/betel-web/";
+//var server = "http://www.colegiobetel.edu.uy/web/mensajes/";
 
 ServerAPI = "AlzaSyB9dNgR4Ly7Ich63FIHIFbZd1_zOdcg9OI";
 applicationId = "5a96c15c1db2dc10a0165814";
@@ -12,11 +13,17 @@ function showPanel(panel, after, efecto){
 		after = null;
 	
 	switch(efecto){
+		case 'faderight':
+			$("[panel=" + panel + "]").show("slide", { direction: "right" }, 500);
+		break;
 		case 'fadeleft':
 			$("[panel=" + panel + "]").show("slide", { direction: "left" }, 500);
 		break;
-		default:
+		case 'slow':
 			$("[panel=" + panel + "]").show("slow", after);
+		break;
+		default:
+			$("[panel=" + panel + "]").show(1, after);
 			
 	}
 }

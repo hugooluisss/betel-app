@@ -94,7 +94,7 @@ var app = {
 		else
 			showPanel("bienvenida", function(){
 				$("#txtCelular").focus();
-			});
+			}, "showPanel");
 			
 		var celular = window.localStorage.getItem("celular");
 		$("#txtCelular").val(celular)
@@ -116,7 +116,7 @@ var app = {
 						$("#frmLogin [type=submit]").prop("disabled", true);
 						showPanel("codigo", function(){
 							$("#txtCodigo").val("").focus();
-						});
+						}, "faderight");
 					},
 					after: function(data){
 						$("#frmLogin [type=submit]").prop("disabled", false);
@@ -132,7 +132,7 @@ var app = {
 							
 							showPanel("bienvenida", function(){
 								$("#txtCelular").focus();
-							});
+							}, "faderight");
 						}
 					}
 				});
@@ -174,7 +174,7 @@ var app = {
 		$("#btnShowBienvenida").click(function(){
 			showPanel("bienvenida", function(){
 				$("#txtCelular").focus();
-			});
+			}, "fadeleft");
 		});
 	}
 };
