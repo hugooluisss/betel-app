@@ -4,7 +4,7 @@ TUsuario = function(fn){
 	this.requestCode = function(datos){
 		if (datos.before !== undefined) datos.before();
 		
-		$.post(server + 'interface.php', {
+		$.post(server, {
 			"celular": datos.celular,
 			"action": 'requestCodeVerify',
 		}, function(resp){
@@ -19,7 +19,7 @@ TUsuario = function(fn){
 	this.verificarCodigo = function(datos){
 		if (datos.before !== undefined) datos.before();
 		
-		$.post(server + 'interface.php', {
+		$.post(server, {
 			"celular": datos.celular,
 			"codigo": datos.codigo,
 			"action": 'verifyCode',
@@ -36,7 +36,7 @@ TUsuario = function(fn){
 		if (datos.before !== undefined) datos.before();
 		
 		var codigo = window.localStorage.getItem("sesion");
-		$.post(server + 'interface.php', {
+		$.post(server, {
 			"codigo": codigo,
 			"inicio": datos.inicio,
 			"actualizacion": datos.actualizacion,
@@ -45,20 +45,5 @@ TUsuario = function(fn){
 			if (datos.after !== undefined)
 				datos.after(resp);
 		}, "json");
-	}
-	
-	this.getData = function(datos){
-		if (datos.fn.before !== undefined) datos.fn.before();
-		$.post(server + 'ctransportistas', {
-				"id": datos.id,
-				"action": 'getData',
-				"movil": 1
-			}, function(data){
-				if (data.band == 'false')
-					console.log("No se pudo recuperar la información del usuario");
-					
-				if (datos.fn.after !== undefined)
-					datos.fn.after(data);
-			}, "json");
 	}
 };
