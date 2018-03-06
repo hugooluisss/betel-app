@@ -57,7 +57,9 @@ var app = {
 			// userId = data.userId
 		});
 		
-		
+		$("#showMensajes").click(function(){
+			$("[panel=mensaje]").hide("slide", { direction: "right" }, 500);
+		});
 		
 		
 		// Should be called once app receive the notification only while the application is open or in background
