@@ -113,7 +113,6 @@ var app = {
 			});
 			
 			window.plugins.PushbotsPlugin.resetBadge();
-			
 			window.plugins.PushbotsPlugin.toggleNotifications(true);
 			
 			//window.plugins.PushbotsPlugin.debug(true);
@@ -187,6 +186,10 @@ function addMensaje(mensaje){
 	li.append(titulo); //.append('<br /><span class="badge">' + mensaje.fecha + '</span>');
 	li.attr("data", JSON.stringify(mensaje));
 	$(".listaMensajes").prepend(li);
+	
+	if (mensaje.estado == 2){
+		li.addClass("leido");
+	}
 	
 	li.click(function(){
 		var mensaje = jQuery.parseJSON($(this).attr("data"));

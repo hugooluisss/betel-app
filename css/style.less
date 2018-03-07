@@ -67,7 +67,7 @@ body{
 		position: absolute;
 		top: 0px;
 		width: 100%;
-		
+		height: 100%;
 		background: @gris;
 	}
 	
@@ -92,7 +92,14 @@ body[modulo="login"]{
 }
 
 body[modulo="mensajes"]{
+	overflow-y: hidden;
+	
 	.container{
-		padding-top: 80px;
+		margin-top: 60px;
+	}
+	
+	.listaMensajes{
+		height: 80%;
+		overflow:scroll;
 	}
 }
