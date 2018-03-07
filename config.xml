@@ -35,6 +35,9 @@
 		<preference name="LoadUrlTimeoutValue" value="70000"/>
 		<preference name="android-windowSoftInputMode" value="stateVisible|adjustResize"/>
 		
+		<preference name="SplashScreenDelay" value="5000" />
+		<preference name="AutoHideSplashScreen" value="true" />
+		
 		<!-- Plugins -->  
 		<!-- Core plugins -->  
 		<!-- Third party plugins -->  
