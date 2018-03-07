@@ -38,6 +38,8 @@ var app = {
 		document.addEventListener("backbutton", function(){
 			return false;
 		}, true);
+		
+		navigator.splashscreen.show();
 				
 		// Should be called once app receive the notification only while the application is open or in background
 		window.plugins.PushbotsPlugin.on("notification:received", function(data){
