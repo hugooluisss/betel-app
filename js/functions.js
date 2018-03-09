@@ -1,7 +1,7 @@
 var server = "http://192.168.2.4/betel-web/interface.php";
-var server = "http://192.168.0.12/betel-web/interface.php";
-var server = "http://www.colegiobetel.edu.uy/web/mensajes/interface.php";
-var server = "https://intranet.colegiobetel.edu.uy/api/comunicaciones";
+//var server = "http://192.168.0.12/betel-web/interface.php";
+//var server = "http://www.colegiobetel.edu.uy/web/mensajes/interface.php";
+//var server = "https://intranet.colegiobetel.edu.uy/api/comunicaciones";
 
 ServerAPI = "AlzaSyB9dNgR4Ly7Ich63FIHIFbZd1_zOdcg9OI";
 applicationId = "5a96c15c1db2dc10a0165814";

@@ -207,7 +207,19 @@ function addMensaje(mensaje){
 		$("[panel=mensaje]").show("slide", { direction: "right" }, 500);
 		
 		if (mensaje.estado < 2){
-			li.removeClass("leido");	
+			li.removeClass("leido");
+			
+			$.post(server, {
+				"id": mensaje.referencia,
+				"action": 'setLeido',
+			}, function(){
+				db.transaction(function(tx){
+					tx.executeSql("update mensaje set actualiza = 0 where referencia = ? ", [mensaje.referencia], function(tx, rs){
+						li.addClass("leido");
+					}, errorDB);
+				});
+			});
+			
 			db.transaction(function(tx){
 				var hoy = new Date();
 				fecha = hoy.getFullYear() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getDate() + ' ' + hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();
@@ -234,6 +246,8 @@ function getRemoteMensajes(alertar = true){
 				for (i = 0 ; i < rs.rows.length ; i++){
 					result.push(rs.rows.item(i));
 				}
+				
+				console.log(JSON.stringify(result));
 				
 				objUser.getMensajes({
 					"inicio": inicio,
@@ -301,6 +315,7 @@ function getMensajes(datos){
 function crearBD(){
 	db.transaction(function(tx){
 		//tx.executeSql('drop table if exists mensaje');
+		//tx.executeSql('update mensaje set actualiza = 1, estado = 1');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS mensaje (referencia integer, titulo text, fecha text, mensaje text, estado integer, actualiza integer)', [], function(){
 			console.log("tabla mensaje creada");
 		}, errorDB);
