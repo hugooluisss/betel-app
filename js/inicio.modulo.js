@@ -264,6 +264,7 @@ function getRemoteMensajes(alertar = true){
 									cont++;
 									if (rs.rows.length == 0){
 										tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, 1, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
+											mensaje.referencia = mensaje.idMensaje;
 											addMensaje(mensaje);
 										}, errorDB);
 										nuevos++;
@@ -316,9 +317,13 @@ function crearBD(){
 	db.transaction(function(tx){
 		//tx.executeSql('drop table if exists mensaje');
 		//tx.executeSql('update mensaje set actualiza = 1, estado = 1');
+		
 		tx.executeSql('CREATE TABLE IF NOT EXISTS mensaje (referencia integer, titulo text, fecha text, mensaje text, estado integer, actualiza integer)', [], function(){
 			console.log("tabla mensaje creada");
 		}, errorDB);
+		
+		tx.executeSql('ALTER TABLE IF EXISTS mensaje add referencia integer', [], function(){
+		});
 	});
 }
 
