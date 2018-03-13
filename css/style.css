@@ -28,6 +28,7 @@ body .btn-secondary {
 }
 body .btn-secondary:hover {
   background: #585858;
+  color: white;
 }
 body .navbar {
   background: #00a65a;
