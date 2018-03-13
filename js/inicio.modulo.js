@@ -35,18 +35,6 @@ var app = {
 	// The scope of 'this' is the event. In order to call the 'receivedEvent'
 	// function, we must explicitly call 'app.receivedEvent(...);'
 	onDeviceReady: function() {
-		try{
-			//db = openDatabase({name: "tracking.db"});
-			db = window.sqlitePlugin.openDatabase({name: 'betel.db', location: 1, androidDatabaseImplementation: 2});
-			console.log("Conexión desde phonegap OK");
-			crearBD(db);
-		}catch(err){
-			//alertify.error("No se pudo crear la base de datos con sqlite... se intentará trabajar con web");
-			db = window.openDatabase("betel.db", "1.0", "BD de Betel", 200000);
-			crearBD(db);
-			console.log("Se inicio la conexión a la base para web");
-		}
-			
 		document.addEventListener("backbutton", function(){
 			return false;
 		}, true);
@@ -99,6 +87,18 @@ var app = {
 			location.href = "index.html";
 			window.localStorage.removeItem("fecha");
 		}else{
+			try{
+				//db = openDatabase({name: "tracking.db"});
+				db = window.sqlitePlugin.openDatabase({name: 'betel.db', location: 1, androidDatabaseImplementation: 2});
+				console.log("Conexión desde phonegap OK");
+				crearBD(db);
+			}catch(err){
+				//alertify.error("No se pudo crear la base de datos con sqlite... se intentará trabajar con web");
+				db = window.openDatabase("betel.db", "1.0", "BD de Betel", 200000);
+				crearBD(db);
+				console.log("Se inicio la conexión a la base para web");
+			}
+			
 			showPanel("listaMensajes", function(){
 				getMensajes({
 					after: function(mensajes){
@@ -159,6 +159,11 @@ var app = {
 			    }
 	    	});
 		});
+		
+		setInterval(function(){
+			if(checkConnection(false))
+				getRemoteMensajes(false);
+		}, 10 * 1000);
 	}
 };
 
@@ -196,6 +201,8 @@ function addMensaje(mensaje){
 		fecha = fecha[0].split("-");
 		
 		$("[panel=mensaje]").find("[campo=fecha]").html(fecha[2] + "/" + fecha[1] + "/" + fecha[0]);
+		
+		
 		
 		$("[panel=mensaje]").show("slide", { direction: "right" }, 500);
 		
@@ -313,13 +320,7 @@ function crearBD(){
 		
 		tx.executeSql('CREATE TABLE IF NOT EXISTS mensaje (referencia integer, titulo text, fecha text, mensaje text, estado integer, actualiza integer)', [], function(){
 			console.log("tabla mensaje creada");
-			
-			setInterval(function(){
-				if(checkConnection(false))
-					getRemoteMensajes(false);
-			}, 10 * 1000);
 		}, errorDB);
-		
 		/*
 		tx.executeSql('ALTER TABLE IF EXISTS mensaje add referencia integer', [], function(){
 		});
