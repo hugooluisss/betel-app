@@ -197,8 +197,6 @@ function addMensaje(mensaje){
 		
 		$("[panel=mensaje]").find("[campo=fecha]").html(fecha[2] + "/" + fecha[1] + "/" + fecha[0]);
 		
-		
-		
 		$("[panel=mensaje]").show("slide", { direction: "right" }, 500);
 		
 		if (mensaje.estado < 2){
@@ -322,8 +320,10 @@ function crearBD(){
 			}, 10 * 1000);
 		}, errorDB);
 		
+		/*
 		tx.executeSql('ALTER TABLE IF EXISTS mensaje add referencia integer', [], function(){
 		});
+		*/
 	});
 }
 
