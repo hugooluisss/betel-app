@@ -201,9 +201,6 @@ function addMensaje(mensaje){
 		fecha = fecha[0].split("-");
 		
 		$("[panel=mensaje]").find("[campo=fecha]").html(fecha[2] + "/" + fecha[1] + "/" + fecha[0]);
-		
-		
-		
 		$("[panel=mensaje]").show("slide", { direction: "right" }, 500);
 		
 		if (mensaje.estado < 2){
