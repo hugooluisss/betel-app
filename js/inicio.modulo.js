@@ -191,11 +191,6 @@ function addMensaje(mensaje){
 		li.addClass("leido");
 	}
 	
-	li.find("a[target='_system']").click(function(e){
-	    e.preventDefault();
-	    window.open($(e.currentTarget).attr('href'), '_system', '');
-    });
-	
 	li.click(function(){
 		var mensaje = jQuery.parseJSON($(this).attr("data"));
 		$.each(mensaje, function(key, valor){
@@ -207,6 +202,11 @@ function addMensaje(mensaje){
 		
 		//$("[panel=mensaje]").find("[campo=fecha]").html(fecha[2] + "/" + fecha[1] + "/" + fecha[0]);
 		$("[panel=mensaje]").show("slide", { direction: "right" }, 500);
+		
+		$("[panel=mensaje]").find("a[target='_system']").click(function(e){
+		    e.preventDefault();
+		    window.open($(e.currentTarget).attr('href'), '_system', '');
+	    });
 		
 		if (mensaje.estado < 2){
 			li.removeClass("leido");
