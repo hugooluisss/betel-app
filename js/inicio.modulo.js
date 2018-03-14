@@ -191,6 +191,11 @@ function addMensaje(mensaje){
 		li.addClass("leido");
 	}
 	
+	li.find("a[target='_system']").click(function(e){
+	    e.preventDefault();
+	    window.open($(e.currentTarget).attr('href'), '_system', '');
+    });
+	
 	li.click(function(){
 		var mensaje = jQuery.parseJSON($(this).attr("data"));
 		$.each(mensaje, function(key, valor){
