@@ -260,7 +260,7 @@ function getRemoteMensajes(alertar = true){
 								tx.executeSql("select * from mensaje where referencia = ? ", [mensaje.idMensaje], function(tx, rs){
 									cont++;
 									if (rs.rows.length == 0){
-										tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, 1, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje], function(){
+										tx.executeSql('insert into mensaje(referencia, titulo, fecha, mensaje, estado, actualiza) values (?, ? , ?, ?, ?, 0)', [mensaje.idMensaje, mensaje.titulo, mensaje.fecha, mensaje.mensaje, mensaje.estado], function(){
 											mensaje.referencia = mensaje.idMensaje;
 											addMensaje(mensaje);
 										}, errorDB);
