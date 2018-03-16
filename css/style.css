@@ -83,9 +83,16 @@ body[modulo="mensajes"] .listaMensajes {
   height: 80%;
   overflow: scroll;
 }
-body[modulo="mensajes"] [panel=mensaje] [campo="mensaje"] {
-  height: 70%;
+body[modulo="mensajes"] [panel=mensaje] {
+  height: 90%;
+  overflow-y: hidden;
+}
+body[modulo="mensajes"] [panel=mensaje] .panel {
+  height: 80%;
+}
+body[modulo="mensajes"] [panel=mensaje] .panel [campo="mensaje"] {
   overflow-y: scroll;
+  height: 70%;
 }
 
 /*# sourceMappingURL=style.css.map */

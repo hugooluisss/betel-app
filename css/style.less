@@ -111,9 +111,15 @@ body[modulo="mensajes"]{
 	}
 	
 	[panel=mensaje]{
-		[campo="mensaje"]{
-			height: 70%;
-			overflow-y: scroll;
+		height: 90%;
+		overflow-y: hidden;
+		
+		.panel{
+			height: 80%;
+			[campo="mensaje"]{
+				overflow-y: scroll;
+				height: 70%;
+			}
 		}
 	}
 }
