@@ -86,6 +86,8 @@ body[modulo="mensajes"] .listaMensajes {
 body[modulo="mensajes"] [panel=mensaje] {
   height: 90%;
   overflow-y: hidden;
+  margin-top: 0px;
+  padding-top: 60px;
 }
 body[modulo="mensajes"] [panel=mensaje] .panel {
   height: 80%;
