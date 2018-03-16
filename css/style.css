@@ -71,8 +71,8 @@ body[modulo="mensajes"] {
 }
 body[modulo="mensajes"] #showMensajes {
   position: fixed;
-  top: 100px;
-  left: 50px;
+  top: 50px;
+  left: 25px;
 }
 body[modulo="mensajes"] .container {
   margin-top: 60px;
