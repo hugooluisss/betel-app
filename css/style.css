@@ -76,7 +76,7 @@ body[modulo="mensajes"] {
 	}
 	*/
 }
-body[modulo="mensajes"] .listaMensajes {
+body[modulo="mensajes"] [panel=listaMensajes] {
   height: 80%;
   overflow: scroll;
   margin-top: 60px;
