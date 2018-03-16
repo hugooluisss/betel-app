@@ -68,11 +68,13 @@ body[modulo="login"] .navbar .navbar-brand .img-responsive {
 }
 body[modulo="mensajes"] {
   overflow-y: hidden;
-}
-body[modulo="mensajes"] #showMensajes {
-  position: fixed;
-  top: 63px;
-  left: 22px;
+  /*
+	#showMensajes{
+		position: fixed;
+		top: 63px;
+		left: 22px;
+	}
+	*/
 }
 body[modulo="mensajes"] .container {
   margin-top: 60px;
@@ -80,6 +82,10 @@ body[modulo="mensajes"] .container {
 body[modulo="mensajes"] .listaMensajes {
   height: 80%;
   overflow: scroll;
+}
+body[modulo="mensajes"] [panel=mensaje] [campo="mensaje"] {
+  height: 70%;
+  overflow-y: scroll;
 }
 
 /*# sourceMappingURL=style.css.map */
