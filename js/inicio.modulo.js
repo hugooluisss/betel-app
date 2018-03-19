@@ -62,7 +62,9 @@ var app = {
 
 		window.plugins.PushbotsPlugin.initialize(applicationId, {
 			"android":{
-				"sender_id": SenderID
+				"sender_id": SenderID,
+				"icon": "white_notification_icon",
+				"iconColor": "#123456"
 			}
 		});
 		//window.plugins.PushbotsPlugin.debug(true);
