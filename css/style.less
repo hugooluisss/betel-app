@@ -94,35 +94,13 @@ body[modulo="login"]{
 
 body[modulo="mensajes"]{
 	overflow-y: hidden;
-	/*
-	#showMensajes{
-		position: fixed;
-		top: 63px;
-		left: 22px;
-	}
-	*/
-	.container{
-		//margin-top: 60px;
-	}
 	
-	[panel=listaMensajes]{
-		height: 80%;
-		overflow:scroll;
+	.container{
 		margin-top: 60px;
 	}
 	
-	[panel=mensaje]{
-		height: 90%;
-		overflow-y: hidden;
-		margin-top: 0px;
-		padding-top: 60px;
-		
-		.panel{
-			height: 80%;
-			[campo="mensaje"]{
-				overflow-y: scroll;
-				height: 70%;
-			}
-		}
+	.listaMensajes{
+		height: 80%;
+		overflow:scroll;
 	}
 }
