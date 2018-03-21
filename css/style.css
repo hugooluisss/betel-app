@@ -68,31 +68,13 @@ body[modulo="login"] .navbar .navbar-brand .img-responsive {
 }
 body[modulo="mensajes"] {
   overflow-y: hidden;
-  /*
-	#showMensajes{
-		position: fixed;
-		top: 63px;
-		left: 22px;
-	}
-	*/
 }
-body[modulo="mensajes"] [panel=listaMensajes] {
-  height: 80%;
-  overflow: scroll;
+body[modulo="mensajes"] .container {
   margin-top: 60px;
 }
-body[modulo="mensajes"] [panel=mensaje] {
-  height: 90%;
-  overflow-y: hidden;
-  margin-top: 0px;
-  padding-top: 60px;
-}
-body[modulo="mensajes"] [panel=mensaje] .panel {
+body[modulo="mensajes"] .listaMensajes {
   height: 80%;
-}
-body[modulo="mensajes"] [panel=mensaje] .panel [campo="mensaje"] {
-  overflow-y: scroll;
-  height: 70%;
+  overflow: scroll;
 }
 
 /*# sourceMappingURL=style.css.map */
