@@ -46,7 +46,7 @@
 		<!-- A list of available plugins are available at https://build.phonegap.com/plugins -->  
 
 		<!--<plugin name="cordova-plugin-barcodescanner" source="npm" />-->
-		<gap:plugin name="pushbots-cordova-plugin" spec="1.5.6" source="npm" />
+		<!--<gap:plugin name="pushbots-cordova-plugin" spec="1.5.6" source="npm" />-->
 		<plugin name="cordova-plugin-sqlite" source="npm"/>
 		<plugin name="cordova-plugin-dialogs" source="npm"/>
 		<plugin name="cordova-plugin-network-information" source="npm"/>
