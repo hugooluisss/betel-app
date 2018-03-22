@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "600570554530",
+    "project_id": "firebase-betel"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600570554530:android:99c17950b321f06f",
+        "android_client_info": {
+          "package_name": "com.betel.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600570554530-a0r8svs35baf97i0clhl2umgqip9vgcv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDteoj3tzOOdz0sIK-5FC9JVzEg4FHP8Pg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
