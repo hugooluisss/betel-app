@@ -3,7 +3,7 @@
 	<widget xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:gap = "http://phonegap.com/ns/1.0"  
 		id    = "com.betel.app"
-		version  = "1.0.1">  
+		version  = "1.4.1">  
 		
 		<name>Bet-el</name>  
 		<description>App de mensajeria de Bet-el. Bet-el es un centro educativo cristiano evangelico, con mas de 30 anios de existencia.</description>  

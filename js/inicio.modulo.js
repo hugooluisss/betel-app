@@ -125,6 +125,10 @@ var app = {
 		$("#showMensajes").click(function(){
 			$("[panel=mensaje]").hide("slide", { direction: "right" }, 500);
 		});
+
+		document.addEventListener("backbutton", function(){
+		    $("[panel=mensaje]").hide("slide", { direction: "right" }, 500);
+		}, false);
 		
 		$("#actualizarMensajes").click(function(){
 			getMensajes({

@@ -70,7 +70,7 @@ body[modulo="mensajes"] {
   overflow-y: hidden;
 }
 body[modulo="mensajes"] .container {
-  margin-top: 60px;
+  padding-top: 60px;
 }
 body[modulo="mensajes"] .listaMensajes {
   height: 80%;
